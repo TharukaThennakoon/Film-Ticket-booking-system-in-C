@@ -42,6 +42,23 @@ void bookTicket(){
 
     m.available_seats -= seats;
 
+        FILE *fp = fopen("movies.dat", "rb");
+    FILE *temp = fopen("temp.dat", "wb");
+
+    Movie tempMovie;
+
+    while(fread(&tempMovie, sizeof(Movie), 1, fp)){
+        if(tempMovie.id == id){
+            tempMovie.available_seats = m.available_seats;
+        }
+        fwrite(&tempMovie, sizeof(Movie), 1, temp);
+    }
+
+    fclose(fp);
+    fclose(temp);
+    remove("movies.dat");
+    rename("temp.dat", "movies.dat");
+
     
 }
 
