@@ -59,6 +59,13 @@ void bookTicket(){
     remove("movies.dat");
     rename("temp.dat", "movies.dat");
 
+        FILE *fp2 = fopen("customer.dat", "ab");
+    fwrite(&b, sizeof(Booking), 1, fp);
+    fclose(fp);
+
+    printf("Booking successful! Total price: %d\n", b.total_price);
+
+
     
 }
 
