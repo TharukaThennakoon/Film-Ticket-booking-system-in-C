@@ -89,3 +89,15 @@ void showMyTicket(){
         printf("No bookings found for %s.\n", name);
     }
 }
+
+void checkSeat(){
+    FILE *fp = fopen("movies.dat", "rb");
+    Movie m;
+
+    printf("\n | ID | Name | Available Seats |\n");
+    while (fp && fread(&m, sizeof(Movie),1,fp))
+    {
+        printf("| %d | %s | %d |\n", m.id, m.name, m.available_seats);
+    }
+    if(fp) fclose(fp);
+}
