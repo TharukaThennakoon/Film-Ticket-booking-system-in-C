@@ -65,7 +65,27 @@ void bookTicket(){
 
     printf("Booking successful! Total price: %d\n", b.total_price);
 
-
-    
 }
 
+void showMyTicket(){
+    char name[50];
+    printf("Enter your name to view your tickets: ");
+    scanf("%s", name);
+
+    FILE *fp = fopen("customer.dat", "rb");
+    Booking b;
+    int found = 0;
+
+    while (fp && fread(&b, sizeof(Booking), 1, fp)){
+        if(strcmp(b.customer_name, name) == 0){
+            found = 1;
+            printf("\nBooking ID: %d\nMovie: %s\nFormat: %s\nShow Date: %s\nShow Time: %s\nSeats: %d\nTotal Price: %d\n",
+                   b.booking_id, b.movie_name, b.format, b.show_date, b.show_time, b.seats, b.total_price);
+        }
+    }
+    if(fp) fclose(fp);
+
+    if(!found){
+        printf("No bookings found for %s.\n", name);
+    }
+}
