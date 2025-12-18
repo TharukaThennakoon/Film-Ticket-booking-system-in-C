@@ -60,3 +60,37 @@ int findMovie(int id, Movie *m){
     if(fp) fclose(fp);
     return 0; // not found
 }
+void editMovie(){
+    int id;
+    printf("Enter movie ID to edit: ");
+    scanf("%d", &id);
+
+    FILE *fp = fopen("movies.dat", "rb");
+    FILE *temp = fopen("temp.dat", "wb");
+
+    Movie m;
+    int found = 0;
+
+    while (fread(&m, sizeof(Movie), 1, fp)){
+        if(m.id == id){
+            found = 1;
+
+            printf("Enter new movie name: ");
+            char name[50];
+            scanf("%s", name);
+
+            if(strcmp(name, "xN") != 0)
+            strcpy(m.name, name);
+        }
+
+        fwrite(&m, sizeof(Movie), 1, temp);
+    }
+    if(fp) fclose(fp);
+    if(temp) fclose(temp);
+
+    remove("movies.dat");
+    rename("temp.dat", "movies.dat");
+
+    if(found) printf("Movie updated successfully.\n");
+    else printf("Movie with ID %d not found.\n", id);
+}
