@@ -49,3 +49,14 @@ void showMovies(){
     }
     if(fp) fclose(fp);
 }
+int findMovie(int id, Movie *m){
+    FILE *fp = fopen("movies.dat", "rb");
+    while (fp && fread(m, sizeof(Movie), 1, fp)){
+        if(m-> id == id){
+            fclose(fp);
+            return 1; // found
+        }
+    }
+    if(fp) fclose(fp);
+    return 0; // not found
+}
