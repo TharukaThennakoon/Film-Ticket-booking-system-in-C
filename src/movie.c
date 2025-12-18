@@ -38,3 +38,14 @@ void addMovie(){
 
 }
 
+void showMovies(){
+    FILE *fp = fopen("movies.dat", "rb");
+    Movie m;
+
+    printf("\n | ID | Name | Genre  | Format | Show Date  | Show Time | Price | Available Seats |\n");
+    while (fp && fread(&m, sizeof(Movie),1,fp))
+    {
+        printf("| %d | %s | %s | %s | %s | %s | %d | %d |\n", m.id, m.name, m.genre, m.format, m.show_date, m.show_time, m.price, m.available_seats);
+    }
+    if(fp) fclose(fp);
+}
