@@ -94,3 +94,33 @@ void editMovie(){
     if(found) printf("Movie updated successfully.\n");
     else printf("Movie with ID %d not found.\n", id);
 }
+void deleteMovie(){
+    int id;
+    printf("Enter movie ID to delete: ");
+    scanf("%d", &id);
+
+    FILE *fp = fopen("movies.dat", "rb");
+    FILE *temp = fopen("temp.dat", "wb");
+
+    Movie m;
+    int found = 0;
+
+    while (fread(&m, sizeof(Movie), 1, fp))
+    {
+        if(m.id == id){
+            found = 1;
+            continue; // skip writing this movie to temp
+        }
+        fwrite(&m, sizeof(Movie), 1, temp);
+    }
+
+    fclose(fp);
+    fclose(temp);
+
+    remove("movies.dat");
+    rename("temp.dat", "movies.dat");
+
+    if(found) printf("Movie deleted successfully.\n");
+    else printf("Movie with ID %d not found.\n", id);
+    
+}
